@@ -7,8 +7,7 @@
   import VideoPlayer from '$lib/components/VideoPlayer.svelte';
   import UpcomingReleases from '$lib/components/UpcomingReleases.svelte';
 
-  const API_KEY = import.meta.env.VITE_RAWG_API_KEY;
-  const BASE_URL = 'https://api.rawg.io/api';
+  
 
   interface Game {
     id: string;
@@ -20,9 +19,18 @@
     };
   }
 
+  interface UpcomingGame {
+    id: string;
+    title: string;
+    releaseDate: string;
+  }
+
   let searchResults: Game[] = [];
   let upcomingGames: Game[] = [];
   let selectedVideo: { url: string } | null = null;
+
+  const apiKey = import.meta.env.VITE_RAWG_API_KEY;
+  const apiUrl = 'https://api.rawg.io/api';
 
   onMount(() => {
     gsap.from('.app-container', { opacity: 0, y: 50, duration: 1 });
@@ -33,6 +41,10 @@
     const query = event.detail;
     try {
         const response = await fetch(`${apiUrl}/games?key=${apiKey}&search=${query}`);
+    if (!response.ok) {
+        console.error(`Error: ${response.status} - ${response.statusText}`);
+        return;
+      }
       const data = await response.json();
       searchResults = data.results;
     } catch (error) {
@@ -45,8 +57,7 @@
     const today = new Date().toISOString().slice(0, 10);
     const nextYear = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().slice(0, 10);
     try {
-      const response = await fetch(`${BASE_URL}/games?dates=${today},${nextYear}&ordering=-added&key=${API_KEY}`);
-      const data = await response.json();
+    const response = await fetch(`${apiUrl}/games?key=${apiKey}&dates=2024-01-01,2024-12-31&ordering=-added`);      const data = await response.json();
       upcomingGames = data.results.slice(0, 10); // Limit to 10 games
     } catch (error) {
       console.error('Error fetching upcoming games:', error);
