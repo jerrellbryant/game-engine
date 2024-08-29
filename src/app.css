@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Urbanist Variable', sans-serif;
+    color: #000;
+}
+
+/* .bg-gradient {
+        background: radial-gradient(
+            circle at top center,
+            hsla(222, 80%, 60%, 0.5) 0%,
+            hsla(222, 0%, 0%, 0) 50%,
+            hsla(222, 0%, 0%, 0) 100%
+        );
+        position: absolute;
+        inset: 0;
+        z-index: -50;
+        max-height: 100vh;
+    }
+
+    .absolute {
+        position: absolute;
+    } */
+
+    .inset-0 {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    /* .-z-50 {
+        z-index: -50;
+    } */
+
+    .max-h-screen {
+        max-height: 100vh;
+    }
