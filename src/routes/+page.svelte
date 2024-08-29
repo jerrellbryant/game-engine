@@ -32,7 +32,7 @@
   async function handleSearch(event: CustomEvent<string>) {
     const query = event.detail;
     try {
-      const response = await fetch(`${BASE_URL}/games?search=${query}&key=${API_KEY}`);
+        const response = await fetch(`${apiUrl}/games?key=${apiKey}&search=${query}`);
       const data = await response.json();
       searchResults = data.results;
     } catch (error) {
